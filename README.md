@@ -4,30 +4,55 @@ Backend API untuk Sikokar menggunakan Express + MySQL.
 
 ## Prasyarat
 - Node.js 18+ (disarankan 20+)
-- Docker Desktop (opsional, untuk DB via container)
+- Docker Desktop (disarankan, untuk DB via container)
 
-## Menjalankan Lokal (tanpa Docker)
-1. Salin `.env.example` menjadi `.env` lalu sesuaikan jika perlu (untuk lokal tanpa Docker, set `DB_HOST=localhost`).
+## Rekomendasi Tim (paling simpel)
+Tujuan: semua orang tinggal koding, DB seragam lewat Docker.
+1. Salin `.env.example` menjadi `.env`.
+2. Ubah `.env` menjadi:
+   - `PORT=3002` (biar tidak bentrok)
+   - `DB_HOST=localhost`
+3. Jalankan DB saja:
+   ```bash
+   docker compose up -d db
+   ```
+4. Install dependencies dan jalankan API lokal:
+   ```bash
+   npm install
+   npm run dev
+   ```
+5. Cek health:
+   ```
+   GET http://localhost:3002/health
+   ```
+
+## Menjalankan Lokal (DB via Docker)
+1. Salin `.env.example` menjadi `.env` lalu set `DB_HOST=localhost`.
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Jalankan server:
+3. Jalankan DB saja:
+   ```bash
+   docker compose up -d db
+   ```
+4. Jalankan server:
    ```bash
    npm run dev
    ```
-4. Cek health endpoint:
+5. Cek health endpoint:
    ```
-   GET http://localhost:3000/health
+   GET http://localhost:<PORT>/health
    ```
 
-## Menjalankan dengan Docker Compose
+## Menjalankan dengan Docker Compose (API + DB)
 1. Salin `.env.example` menjadi `.env`.
+2. Set `DB_HOST=db` di `.env`.
 2. Jalankan:
    ```bash
    docker compose up --build
    ```
-3. API akan tersedia di `http://localhost:3000/health`.
+3. API akan tersedia di `http://localhost:<PORT>/health`.
 
 ## Database
 - Dump SQL disimpan di `db/init.sql` dan akan di-load otomatis saat container DB pertama kali dibuat.
