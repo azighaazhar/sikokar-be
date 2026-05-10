@@ -1,5 +1,5 @@
 const express = require("express");
-const { healthCheck } = require("../controllers/healthController");
+const { healthCheck, healthCheckDb } = require("../controllers/healthController");
 const { login } = require("../controllers/authController");
 const { createUser, listUsers, getUserById } = require("../controllers/userController");
 const { listAnggota, getAnggotaById, createAnggota } = require("../controllers/anggotaController");
@@ -21,6 +21,7 @@ const { asyncHandler } = require("../middleware/errorHandler");
 const router = express.Router();
 
 router.get("/health", asyncHandler(healthCheck));
+router.get("/health/db", asyncHandler(healthCheckDb));
 router.post("/auth/login", asyncHandler(login));
 router.post("/users", requireAuth, requireRole(["admin"]), asyncHandler(createUser));
 router.get("/users", requireAuth, requireRole(["admin"]), asyncHandler(listUsers));
