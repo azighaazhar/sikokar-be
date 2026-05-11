@@ -20,7 +20,7 @@ const requireAuth = (req, res, next) => {
       return res.status(500).json({ message: "JWT secret not configured" });
     }
     const payload = jwt.verify(token, secret, {
-      maxAge: process.env.JWT_EXPIRES_IN || "1m"
+      maxAge: process.env.JWT_EXPIRES_IN || "1d"
     });
     if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) {
       return res.status(401).json({ message: "Token expired" });
